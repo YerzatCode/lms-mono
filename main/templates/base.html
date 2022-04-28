@@ -8,21 +8,19 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@1,300&family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">	 
 	<script src="https://kit.fontawesome.com/e9b4a4c6c5.js" crossorigin="anonymous"></script>
-	 
 </head>
 <body>
 	<header>
 		<div class="header-title">
 			Computer Scince
-		</div>
-		<div id="open_menu">☰<span id="open_menu_text"> Мәзір</span></div>
+		</div>	
 	</header>
-
 	<nav>
+		<div id="open_menu">☰<span id="open_menu_text"></span></div>
 		<ul>
-			<li><a href="#"><i class="fas fa-home"></i> <span class="nav-link-text">Басты парақ</span></a></li>
-			<li><a href="#"><i class="fas fa-newspaper"></i> <span class="nav-link-text">Жаңалықтар</span></a></li>
-			<li><a href="#"><i class="fas fa-user-graduate"></i> <span class="nav-link-text">Аккаунт ашу</span></a></li>
+			<li><a href="{% url 'main' %}"><i class="fas fa-home"></i> <span class="nav-link-text">Басты парақ</span></a></li>
+			<li><a href=""><i class="fas fa-newspaper"></i> <span class="nav-link-text">Жаңалықтар</span></a></li>
+			<li><a href="{% url 'members' %}"><i class="fas fa-user-graduate"></i> <span class="nav-link-text">Аккаунт ашу</span></a></li>
 			<li>
 				<details>
 					<summary style="color: #378752;"><i class="fas fa-laptop-code"></i> <span class="nav-link-text">Информатика</span></summary>
@@ -56,7 +54,6 @@
 				</details>
 			</li>
 			<li><a href="https://kundelik.kz/" target="_blank"><i class="fas fa-book-reader"></i> <span class="nav-link-text">Kundelik.kz</span></a></li>
-
 		</ul>
 	</nav>
 	<main>
