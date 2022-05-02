@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
- 
+{% if request.user.is_authenticated %}
+<h2>authentication</h2>
+{% endif %}
 {% endblock %}

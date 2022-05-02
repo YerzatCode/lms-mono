@@ -8,7 +8,7 @@ jQuery('#open_menu').on('click', function() {
 		$("nav").css("width", '60px');	
 		$("nav").css("padding-top", '60px');	
 		$("nav li").css("padding", '15px');	
-		$(".members-conatainer").css("margin-left", '80px');	
+		$(".container").css("margin-left", '80px');	
 		$("#open_menu").css("left", '45px');	
 
 		menu_status = 'closed'
@@ -22,9 +22,22 @@ jQuery('#open_menu').on('click', function() {
 		$("nav li").css("padding-top", '10px');	
 		$("nav li").css("padding-left", '60px');	
 		$("#open_menu").css("left", '235px');
-		$(".members-conatainer").css("margin-left", '250px');	
+		$(".container").css("margin-left", '250px');	
 
 		menu_status = 'opened'
 
 	}
 }); 
+
+$('input').on('input invalid', function() {
+	this.setCustomValidity('')
+	if (this.validity.valueMissing) {
+		this.setCustomValidity("Осы жолақты толтыру міндетті")
+	}
+	if (this.validity.typeMismatch) {
+		this.setCustomValidity("Енгізілген деректер типі сәйкес емес")
+	}
+	if (this.validity.patternMismatch) {
+		this.setCustomValidity("Паттернге сәйкес емес")
+	}
+})

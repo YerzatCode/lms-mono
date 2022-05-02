@@ -80,6 +80,85 @@ nav li i {
 	width: 18px;
 	font-size: 16px;
 } 
-.members-conatainer {
+.container {
 	margin-left: 250px;
+	max-width: 100%;
+	margin-top: 3em;
+}
+.members-container {
+	
+	display: flex;
+	justify-content: center;
+}
+.auth-block-container {
+	width: 220px;
+	box-shadow: 0 0 5px;
+	margin: 80px;
+	padding: 5px;
+	background: #fff;
+	border-radius: 10px;
+	position: relative;
+	height: 250px;
+}
+.auth-block-container form input {
+	width: 100%;
+	padding-bottom: 1px;
+	border: 0;
+	border-bottom: 1px solid #000;
+	margin-bottom: 8px;
+	font-size: 18px;
+	outline: none;
+}
+.auth-block-container h2 {
+	text-align: center;
+	padding: 10px 0;
+}
+.auth-block-container form button {
+	display: flex;
+	background: #7bb38d;
+	color: #000;
+	border: 0;
+	font-size: 18px;
+	width: 220px;
+	justify-content: center;
+	padding: 5px 0;
+	margin: 5px 0;
+	cursor: pointer;
+	position: absolute;
+	bottom: 5px;
+}
+#mobile_mess { 
+	display: none;
+}
+.auth-block-container p {
+	text-align: center;
+	font-size: 18px;
+	padding: 5px 0;
+	color: #7bb38d;
+}
+.auth-block-container p a {
+	color: cyan;
+}
+#logout {
+	background: red;
+	color: #fff;
+	padding: 2px;
+	margin: 0 5px;
+	border-radius: 5px;
+}
+.container-customer {
+
+}
+.block-compiler {
+	width: 800px;
+	margin: auto;
+}
+.block-compiler h1 {
+	text-align: center;
+}
+.block-compiler textarea {
+	width: 100%;
+	padding: 5px;
+	font-size: 20px;
+	outline: none;
 }

@@ -1,7 +1,7 @@
 {% load static %}
 <!DOCTYPE html> 
 <html>
-<head>
+<head lang="kk">
 	<meta charset="utf-8">
 	<title>Computer Scince</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}">
@@ -20,7 +20,7 @@
 		<ul>
 			<li><a href="{% url 'main' %}"><i class="fas fa-home"></i> <span class="nav-link-text">Басты парақ</span></a></li>
 			<li><a href=""><i class="fas fa-newspaper"></i> <span class="nav-link-text">Жаңалықтар</span></a></li>
-			<li><a href="{% url 'members' %}"><i class="fas fa-user-graduate"></i> <span class="nav-link-text">Аккаунт ашу</span></a></li>
+			<li><a href="{% url 'compiler' %}"><i class="fas fa-code"></i> <span class="nav-link-text">Компилятор</span></a></li>
 			<li>
 				<details>
 					<summary style="color: #378752;"><i class="fas fa-laptop-code"></i> <span class="nav-link-text">Информатика</span></summary>
@@ -54,6 +54,12 @@
 				</details>
 			</li>
 			<li><a href="https://kundelik.kz/" target="_blank"><i class="fas fa-book-reader"></i> <span class="nav-link-text">Kundelik.kz</span></a></li>
+
+			{% if request.user.is_authenticated %}
+			<li><span class="nav-link-text"><a href="{% url 'members' %}"><i class="fas fa-user-graduate"></i> {{ request.user }}</a> <a href="{% url 'logout' %}" id="logout">шығу</a></span></li>
+			{% else %}
+			<li><a href="{% url 'members' %}"><i class="fas fa-user-graduate"></i> <span class="nav-link-text">Аккаунт ашу</span></a></li>
+			{% endif %}
 		</ul>
 	</nav>
 	<main>
