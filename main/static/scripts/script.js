@@ -41,3 +41,16 @@ $('input').on('input invalid', function() {
 		this.setCustomValidity("Паттернге сәйкес емес")
 	}
 })
+$('textarea').on('input invalid', function() {
+	this.setCustomValidity('')
+	if (this.validity.valueMissing) {
+		this.setCustomValidity("Алдымен кодты жазыңыз")
+	}
+	if (this.validity.typeMismatch) {
+		this.setCustomValidity("Енгізілген деректер типі сәйкес емес")
+	}
+	if (this.validity.patternMismatch) {
+		this.setCustomValidity("Паттернге сәйкес емес")
+	}
+})
+

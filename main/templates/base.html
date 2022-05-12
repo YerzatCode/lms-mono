@@ -3,7 +3,7 @@
 <html>
 <head lang="kk">
 	<meta charset="utf-8">
-	<title>Computer Scince</title>
+	<title>Информатика</title>
 	<link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link href="https://fonts.googleapis.com/css2?family=Overpass:ital,wght@1,300&family=Roboto+Slab:wght@500&display=swap" rel="stylesheet">	 
@@ -12,7 +12,7 @@
 <body>
 	<header>
 		<div class="header-title">
-			Computer Scince
+			Информатика
 		</div>	
 	</header>
 	<nav>
@@ -21,7 +21,8 @@
 			<li><a href="{% url 'main' %}"><i class="fas fa-home"></i> <span class="nav-link-text">Басты парақ</span></a></li>
 			<li><a href=""><i class="fas fa-newspaper"></i> <span class="nav-link-text">Жаңалықтар</span></a></li>
 			<li><a href="{% url 'compiler' %}"><i class="fas fa-code"></i> <span class="nav-link-text">Компилятор</span></a></li>
-			<li>
+			<li><a href="{% url 'subject' %}"><i class="fas fa-code"></i> <span class="nav-link-text">Мектеп</span></a></li>
+			<!-- <li>
 				<details>
 					<summary style="color: #378752;"><i class="fas fa-laptop-code"></i> <span class="nav-link-text">Информатика</span></summary>
 					<details class="details-in-nav">
@@ -52,10 +53,13 @@
 						</div>
 					</details>
 				</details>
-			</li>
+			</li> -->
 			<li><a href="https://kundelik.kz/" target="_blank"><i class="fas fa-book-reader"></i> <span class="nav-link-text">Kundelik.kz</span></a></li>
+			
 
 			{% if request.user.is_authenticated %}
+			<!-- <li><a href="{% url 'task_add' %}"><i class="fas fa-book-reader"></i> <span class="nav-link-text">Тапсырма қосу</span></a></li> -->
+			<li><a href="{% url 'add_course' %}"><i class="fas fa-book-reader"></i> <span class="nav-link-text">Сабақ қосу</span></a></li>
 			<li><span class="nav-link-text"><a href="{% url 'members' %}"><i class="fas fa-user-graduate"></i> {{ request.user }}</a> <a href="{% url 'logout' %}" id="logout">шығу</a></span></li>
 			{% else %}
 			<li><a href="{% url 'members' %}"><i class="fas fa-user-graduate"></i> <span class="nav-link-text">Аккаунт ашу</span></a></li>
@@ -69,5 +73,9 @@
 	<script src="https://kit.fontawesome.com/e9b4a4c6c5.js" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="{% static 'scripts/jquery-3.6.0.min.js' %}"></script>
 	<script type="text/javascript" src="{% static 'scripts/script.js' %}"></script>
+	<!-- <script type="text/javascript" src="{% static 'scripts/course.js' %}"></script>	 -->
+
+	{% block script %}
+	{% endblock %}
 </body>
 </html>

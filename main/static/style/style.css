@@ -3,9 +3,10 @@
 	padding: 0;
 	font-family: Times, Times New Roman, serif;
 	transition: 0.1s;
+
 }
 body {
-	background: #badabf;
+	background: #ddd;
 }
 header {
 	width: 100%;
@@ -150,7 +151,7 @@ nav li i {
 
 }
 .block-compiler {
-	width: 800px;
+	width: 1000px;
 	margin: auto;
 }
 .block-compiler h1 {
@@ -158,7 +159,206 @@ nav li i {
 }
 .block-compiler textarea {
 	width: 100%;
-	padding: 5px;
+	/*padding: 5px;*/
 	font-size: 20px;
 	outline: none;
+	resize: none;
+
+}
+.block-compiler button {
+	width: 100%;
+	padding: 5px;
+	font-size: 20px;
+	background: #7bb38d;
+	color: #000;
+	cursor: pointer;
+	border: 0;
+
+}
+.form-add-course, .task-add-form, .block-content {
+	width: 1000px;
+	margin: auto;
+	text-align: center;
+	box-shadow: 0 0 5px #000;
+	padding: 5px;
+	background: #fff;
+	border-radius: 5px;
+}
+.form-add-course input, .form-add-course select, .task-add-form input, .task-add-form textarea, .task-add-form select {
+	width: 100%;
+	font-size: 18px;
+	padding: 1px;
+	outline: none;
+	margin-bottom: 5px ;
+	
+}
+.form-add-course input, .task-add-form input {
+	border: 0;
+	border-bottom: 1px solid #000;
+}
+.form-add-course button, .task-add-form button{
+	width: 100%;
+	padding: 5px;
+	font-size: 20px;
+	background: #7bb38d;
+	color: #000;
+	cursor: pointer;
+	border: 0;
+}
+
+.form-add-course p {
+	font-size: 22px;
+	margin-top: 20px;
+}
+
+.form-add-course a {
+	width: 100%;
+	background: #7bb38d;
+	font-size: 20px;
+	padding: 5px;
+	color: #000;
+	text-decoration: none;
+	margin-top: 10px;
+	border-radius: 10px;
+}
+.subject-block {
+	margin-bottom: 20px;
+	position: relative;
+	
+}
+.subject-block details {
+	font-size: 20px;
+	padding: 5px;
+	width: 99%;
+	box-shadow: 0 0 5px;
+	border-radius: 10px;
+	display: inline-block;
+	background: #7bb38d;
+}
+.subject-block summary {
+	cursor: pointer;
+}
+.subject-block p {
+	margin: 5px 0;
+	padding: 2px;
+	font-size: 18px;
+	cursor: pointer;
+	box-shadow: 0 0 2px;
+	border-radius: 5px;
+	background: #fff;
+}
+
+
+
+* {}
+body {font-family: "Lato", sans-serif;}
+
+/* Style the tab */
+.tab {
+    float: left;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+    width: 200px;
+    height: 500px;
+    text-align: center;
+    box-sizing: border-box;
+}
+.course-details-block {
+	width: 1010px;
+	margin: auto;
+	box-shadow: 0 0 5px #000;
+	border-radius: 10px;
+	position: relative;
+	text-align: center;
+	height: 550px;
+	padding: 5px;
+	background: #fff;
+	box-sizing: border-box;
+}
+/* Style the buttons inside the tab */
+.tab button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 10px 5px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 17px;
+    text-align: center;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+    background-color: #ddd;
+}
+
+/* Create an active/current "tab button" class */
+.tab button.active {
+    background-color: #ccc;
+}
+#defaultOpen {
+	background: gray;
+}
+/* Style the tab content */
+.tabcontent {
+    float: left;
+    padding: 0px 12px;
+    border: 1px solid #ccc;
+    width: 800px;
+    border-left: none; 
+    background: #fff;
+    height: 500px;
+    box-sizing: border-box;
+    font-size: 19px;
+}
+
+.tabcontent h3 {
+	margin-bottom: 15px;
+}
+.tabcontent textarea {
+	width: 100%;
+	font-size: 18px;
+	resize: none;
+	padding: 5px;
+}
+.tabcontent button {
+	padding: 5px 17px;
+	font-size: 18px;
+	background: #7bb38d;
+	border: 0;
+	outline: none;
+	cursor: pointer;
+}
+.input-user input {
+	margin-top: 15px;
+	font-size: 18px;
+	border: 0;
+	border-bottom: 2px solid #000;
+	padding-bottom: 2.4px;
+	width: 200px;
+	outline: none;
+}
+.result-block-task {
+	font-size: 20px;
+	padding: 15px 0;
+	font-family: serif;
+}
+.test-answer label {
+	display: flex;
+	padding-bottom: 5px;
+	cursor: pointer;
+}
+.test-answer label input {
+	margin: 5px;
+
+}
+.test-answer {
+	padding: 20px;
+}
+.block-compiler ul{
+	margin-left: 20px;
 }

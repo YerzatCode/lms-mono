@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container course-container">
+	<div class="course-details-block">
+		<h1>Тақырып - {{ object.title }} </h1>
+		<div class="tab">
+			<button class="tablinks" onclick="openTask(event, 'start')" id="defaultOpen">Бастау</button>
+			{% for task_id in object.task_f.all %}
+			<button class="tablinks" onclick="openTask(event, 'task_feel_{{ task_id.id }}')" id="open_button_{{ task_id.id }}">{{ task_id.title }}</button>
+			{% endfor %}
+
+			{% for task_t_id in object.task_t.all %}
+			<button class="tablinks" onclick="openTask(event, 'task_test_{{ task_t_id.id }}')" id="open_button_t_{{ task_t_id.id }}">{{ task_t_id.title }}</button>
+			{% endfor %}
+			<button class="tablinks" onclick="openTask(event, 'result')" id="resultSave">Нәтиже</button>
+
+		</div>
+
+		<div id="start" class="tabcontent"><br><br>
+			<h3>Сабақты бастау</h3>
+			<p>Сабақты бастағаннан кейін парақты жабуға болмайды!</p>
+		</div> 
+		{% for task_f in object.task_f.all %}
+		<div id="task_feel_{{ task_f.id }}" class="tabcontent"><br><br>
+			<h3>{{ task_f.title }}</h3>
+			<p><textarea rows="10" disabled>{{ task_f.body|safe }}</textarea></p> 
+			<!-- <p><strong>жауабы:</strong>{{ task_f.answer }}</p> -->
+ 
+			<div class="input-user" id="input_user_{{ task_f.id }}">
+				<input type="text" placeholder="Жауапты енгіз..." id="user_answer_{{ task_f.id }}">
+				<button onclick="checkAnswer('task_answer_{{ task_f.id }}', 'user_answer_{{ task_f.id }}', 'res_answer_{{ task_f.id }}', 'input_user_{{ task_f.id }}', 'open_button_{{ task_f.id }}')">Тексеру</button>
+			</div>
+			<div class="result-block-task" id="res_answer_{{ task_f.id }}"></div>
+		</div>
+		<script type="text/javascript">
+			localStorage.setItem('task_answer_{{ task_f.id }}', '{{ task_f.answer }}')
+		</script>
+		{% endfor %}
+
+		{% for task_t in object.task_t.all %}
+		<div id="task_test_{{ task_t.id }}" class="tabcontent"><br><br>
+			<h3>{{ task_t.title }}</h3>
+			<p>{{ task_t.body|safe }}</p>
+			<div class="test-answer">
+				<label class="task-test-{{ task_t.id }}">
+					<input type="radio" name="test" onclick="checkAnswerTest(
+						'{{ task_t.answer_1 }}', 
+						'{{ task_t.answer_true }}',
+						'res_answer_t_{{ task_t.id }}',
+						'open_button_t_{{ task_t.id }}',
+						'task-test-{{ task_t.id }}')">
+					<div class="answer-block-test" >{{ task_t.answer_1 }}</div>	
+				</label>
+				<label class="task-test-{{ task_t.id }}">
+					<input type="radio" name="test" onclick="checkAnswerTest(
+						'{{ task_t.answer_2 }}', 
+						'{{ task_t.answer_true }}',
+						'res_answer_t_{{ task_t.id }}',
+						'open_button_t_{{ task_t.id }}',
+						'task-test-{{ task_t.id }}')">
+					<div class="answer-block-test">{{ task_t.answer_2 }}</div>	
+				</label>
+				<label class="task-test-{{ task_t.id }}">
+					<input type="radio" name="test" onclick="checkAnswerTest(
+						'{{ task_t.answer_3 }}',
+						'{{ task_t.answer_true }}',
+						'res_answer_t_{{ task_t.id }}',
+						'open_button_t_{{ task_t.id }}',
+						'task-test-{{ task_t.id }}')">
+					<div class="answer-block-test">{{ task_t.answer_3 }}</div>	
+				</label>
+				<label class="task-test-{{ task_t.id }}">
+					<input type="radio" name="test" onclick="checkAnswerTest(
+						'{{ task_t.answer_4 }}', 
+						'{{ task_t.answer_true }}',
+						'res_answer_t_{{ task_t.id }}',
+						'open_button_t_{{ task_t.id }}',
+						'task-test-{{ task_t.id }}')">
+					<div class="answer-block-test">{{ task_t.answer_4 }}</div>	
+				</label> 
+
+			</div>
+			<div class="result-block-task" id="res_answer_t_{{ task_t.id }}"></div>
+		</div>
+		{% endfor %}
+
+
+		<div id="result" class="tabcontent"><br><br>
+			<h3>Сабақты аяқтау</h3>
+			<p>Сабақты бастағаннан кейін парақты жабуға болмайды!</p> 
+
+			<div class="result-block">
+				<div id="all_answer"></div> 
+				<div id="true_answer"></div> 
+				<div id="false_answer"></div>
+				<!-- <div id="procent_answer"></div> -->
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{% static 'scripts/course.js' %}"></script>	
+{% endblock %}

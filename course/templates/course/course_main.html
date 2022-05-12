@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+	<div class="block-content">
+		<h1>Сабақтар </h1>
+		<hr><br>
+		<div class="subject-container">
+		{% for subject in object_list %}
+			<div class="subject-block">
+				<details>
+					<summary>{{ subject }} - тақырып көру</summary><hr> 
+					<div class="subject-content">
+						{% for crs in subject.course.all %}
+						<p><a href="{% url 'course_page' crs.id %}">{{ crs }}</a></p>
+						{% endfor %}
+					</div>
+				</details>
+			</div>
+		{% endfor %}
+		</div>
+	</div>
+</div>
+{% endblock %}
