@@ -60,9 +60,8 @@ def compile_user_code(python_cod, request_user):
 		return 'Invalid syntax'
 
 def compiler(request):
-	res = list()
 	python_cod = ''
-	res.append('Нәтиже осы жерде')
+	res = 'Нәтиже осы жерде'
 	if request.method == 'POST':
 		python_cod = request.POST.get('python_cod')
 		res = str(compile_user_code(python_cod, request.user)) 

@@ -1,4 +1,4 @@
-qestion = []
+
 function openTask(evt, cityName) {
 	var i, tabcontent, tablinks;
 	tabcontent = document.getElementsByClassName("tabcontent");
@@ -16,20 +16,24 @@ function openTask(evt, cityName) {
 document.getElementById("defaultOpen").click();
 
 
-function checkAnswer(task, user, result, input_block, input_style) {  
+function checkAnswer(task, user, result, input_block, input_style, task_status) {  
 	var user_answer = document.getElementById(user).value;	
 	var true_answer = localStorage.getItem(task);
 	if (user_answer == true_answer) {
 		console.log(true)
 		document.getElementById(result).innerHTML = 'Дұрыс'; 
-		$("#" + input_style).css("background", 'green');
+		$("#" + input_style).css("background", '#02a0da');
 		qestion.push(0)
+		localStorage.setItem(task_status, 'true')
+
 
 	} else {
 		console.log(false)
 		document.getElementById(result).innerHTML = 'Қате'; 
 		$("#" + input_style).css("background", 'red');
 		qestion.push(1) 
+		localStorage.setItem(task_status, 'false')
+
 	}
 	$("#" + input_block).css("display", 'none');
 	var false_q = qestion.length - qestion.reduce((a, b) => a + b, 0)
@@ -42,18 +46,21 @@ function checkAnswer(task, user, result, input_block, input_style) {
 	console.log(qestion.reduce((a, b) => a + b, 0))
 }
 
-function checkAnswerTest(user_answer, true_answer, result, input_style, task_test_block) {
+function checkAnswerTest(user_answer, true_answer, result, input_style, task_test_block, task_status) {
 	if (user_answer == true_answer) {
 		console.log(true)
 		document.getElementById(result).innerHTML = 'Дұрыс'; 
-		$("#" + input_style).css("background", 'green');
+		$("#" + input_style).css("background", '#02a0da');
 		qestion.push(0)
+		localStorage.setItem(task_status, 'true')
 
 	} else {
 		console.log(false)
 		document.getElementById(result).innerHTML = 'Қате'; 
 		$("#" + input_style).css("background", 'red');
 		qestion.push(1) 
+		localStorage.setItem(task_status, 'false')
+		
 	}
 	var false_q = qestion.length - qestion.reduce((a, b) => a + b, 0)
 	document.getElementById("all_answer").innerHTML = 'Барлығы ' + qestion.length
