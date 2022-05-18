@@ -1,10 +1,34 @@
 from importlib import import_module
 from django.shortcuts import render, redirect
 from pprint import pformat 
-from .forms import TaskFillAddForm, CourseAddForm, TeamForm
-from .models import Course, Subject
+from .forms import TaskFillAddForm, CourseAddForm, AddCoruseForm, UserResultForm
+from .models import Course, Subject, UserResult
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from random import randint
+from datetime import datetime
+
+
+def course_details_view(request, pk):
+	result = 'Қазірше бос'
+	task_key = None
+	if request.method == 'POST':
+		python_cod = request.POST.get('python_cod')
+		answer = 	 request.POST.get('true_answer')
+		task_key = 	 request.POST.get('task_id')
+		res = str(compile_user_code(python_cod, request.user)) 
+		if str(res) == str(answer):
+			result = 'Дұрыс'
+		else:
+			result = 'Қате' 
+	data = {
+		'range': [str(i) for i in range(1, 12)],
+		'object_course': Course.objects.get(id = pk),
+		'compiler_result': result,
+		'task_key': task_key,
+	}
+	return render(request, 'course/course_details.html', data)
+
+
 def cod(python_cod): 
 	res = list()  
 	commands = python_cod.split('\n')
@@ -76,14 +100,15 @@ def compiler(request):
 
 def add_course(request):
 	if request.method == 'POST':
-		form = TeamForm(request.POST) 
+		form = AddCoruseForm(request.POST) 
 		message = ''
 		if form.is_valid():
 			form.save(commit = False) 
 			form.save()
+			print(form)
 			return redirect('main')
 			
-	form = TeamForm()
+	form = AddCoruseForm()
 	data = {
 		'task_add_form':form,
 	}
@@ -115,10 +140,28 @@ def create_course(request):
 		for i in array:
 			course_obj.task_f.add(int(i))
 
+def save_user_result(request):
+	if request.method == 'POST':
+		form = UserResultForm(request.POST)
+		if form.is_valid():
+			form = form.save(commit = False)
+			form.date = datetime.now()
+			form.user = request.user
+			form.save()
+			return redirect('main')
 
-class CourseDetailView(DetailView):
-	model = Course
-	template_name = 'course/course_details.html'
+	form = UserResultForm()
+
+	data = {
+		'form_result':form,
+	}
+
+	return render(request, 'course/result_save.html', data)
+
+
+# class CourseDetailView(DetailView):
+	# model = Course
+	# template_name = 'course/course_details.html'
 	# def get_context_data(self, **kwargs):
 	# 	context = super(UserList, self).get_context_data(**kwargs)
 	# 	context['range'] = range(1, 11)
@@ -128,3 +171,16 @@ class SubjectListView(ListView):
 	model = Subject
 	template_name = 'course/course_main.html'
 
+	def get_context_data(self, **kwargs):
+		context = super(SubjectListView, self).get_context_data(**kwargs)
+		context['range'] = [str(i) for i in range(1, 12)]
+		return context
+
+
+class CourseDetailResultView(DetailView):
+	model = Course
+	template_name = 'course/course_result.html'
+	def get_context_data(self, **kwargs):
+		context = super(CourseDetailResultView, self).get_context_data(**kwargs)
+		context['user_results'] = UserResult.objects.filter(course = self.object.id)
+		return context

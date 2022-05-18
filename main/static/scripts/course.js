@@ -11,6 +11,15 @@ function openTask(evt, cityName) {
 	}
 	document.getElementById(cityName).style.display = "block";
 	evt.currentTarget.className += " active";
+
+	var true_q = qestion.length - qestion.reduce((a, b) => a + b, 0)
+	document.getElementById("all_answer").innerHTML = 'Барлығы ' + qestion.length
+	document.getElementById("true_answer").innerHTML = 'Дұрыс ' + true_q
+	document.getElementById("false_answer").innerHTML = 'Қате ' + qestion.reduce((a, b) => a + b, 0)
+	document.getElementById("id_all_task").value = qestion.length
+	document.getElementById("id_true_task").value = true_q
+	document.getElementById("id_false_task").value = qestion.reduce((a, b) => a + b, 0)
+
 }
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
@@ -36,14 +45,10 @@ function checkAnswer(task, user, result, input_block, input_style, task_status) 
 
 	}
 	$("#" + input_block).css("display", 'none');
-	var false_q = qestion.length - qestion.reduce((a, b) => a + b, 0)
-	document.getElementById("all_answer").innerHTML = 'Барлығы ' + qestion.length
-	document.getElementById("true_answer").innerHTML = 'Дұрыс ' + false_q
-	document.getElementById("false_answer").innerHTML = 'Қате ' + qestion.reduce((a, b) => a + b, 0)
 	// document.getElementById("procent_answer").innerHTML = (qestion.reduce((a, b) => a + b, 0)) / qestion.length;
-	console.log(qestion)
-	console.log(qestion.length)
-	console.log(qestion.reduce((a, b) => a + b, 0))
+	// console.log(qestion)
+	// console.log(qestion.length)
+	// console.log(qestion.reduce((a, b) => a + b, 0))
 }
 
 function checkAnswerTest(user_answer, true_answer, result, input_style, task_test_block, task_status) {
@@ -62,14 +67,14 @@ function checkAnswerTest(user_answer, true_answer, result, input_style, task_tes
 		localStorage.setItem(task_status, 'false')
 		
 	}
-	var false_q = qestion.length - qestion.reduce((a, b) => a + b, 0)
-	document.getElementById("all_answer").innerHTML = 'Барлығы ' + qestion.length
-	document.getElementById("true_answer").innerHTML = 'Дұрыс ' + false_q
-	document.getElementById("false_answer").innerHTML = 'Қате ' + qestion.reduce((a, b) => a + b, 0)
+	// var false_q = qestion.length - qestion.reduce((a, b) => a + b, 0)
+	// document.getElementById("all_answer").innerHTML = 'Барлығы ' + qestion.length
+	// document.getElementById("true_answer").innerHTML = 'Дұрыс ' + false_q
+	// document.getElementById("false_answer").innerHTML = 'Қате ' + qestion.reduce((a, b) => a + b, 0)
 	// document.getElementById("procent_answer").innerHTML = (qestion.reduce((a, b) => a + b, 0)) / qestion.length;
-	console.log(qestion)
-	console.log(qestion.length)
-	console.log(qestion.reduce((a, b) => a + b, 0))
+	// console.log(qestion)
+	// console.log(qestion.length)
+	// console.log(qestion.reduce((a, b) => a + b, 0))
 	$("." + task_test_block + " input").prop("disabled", true);
 
 }

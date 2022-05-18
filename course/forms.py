@@ -1,5 +1,5 @@
 from django import forms
-from .models import TaskIsFill, Course
+from .models import TaskIsFill, Course, UserResult
 from django.contrib.admin.widgets import FilteredSelectMultiple
 
 
@@ -8,12 +8,14 @@ class TaskFillAddForm(forms.ModelForm):
 		model = TaskIsFill
 		fields = ('__all__')
 
+
 class CourseAddForm(forms.ModelForm):
 	class Meta:
 		model = Course
 		fields = ('__all__')
 
-class TeamForm(forms.ModelForm):
+
+class AddCoruseForm(forms.ModelForm):
     class Meta:
         model = Course
         fields = ('__all__')
@@ -25,3 +27,10 @@ class TeamForm(forms.ModelForm):
             'all': ['admin/css/widgets.css'],
         }
         js = ['/admin/jsi18n/']
+
+
+class UserResultForm(forms.ModelForm):
+    class Meta:
+        model = UserResult
+        fields = ('course', 'all_task', 'true_task', 'false_task', 'feedback')
+        exclude = ['user', 'date']

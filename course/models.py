@@ -5,9 +5,9 @@ from members.models import Customer
 
 
 class TaskIsFill(models.Model):
-	title	= models.CharField('Тапсырма тақырыбы', max_length = 75)
+	title	= models.CharField('Тапсырма тақырыбы', max_length = 1000)
 	body 	= models.TextField('Тапсырма мәтіні')
-	answer 	= models.CharField('Тапсырма жауабы', max_length = 25)
+	answer 	= models.CharField('Тапсырма жауабы', max_length = 100)
 
 	TASK_TYPE_SELF = 'Кодты аяқта'
 	TASK_TYPE_FILL = 'Бос орынды толтыр'
@@ -94,3 +94,21 @@ class Subject(models.Model):
 	class Meta:
 		verbose_name = 'Пән'
 		verbose_name_plural = 'Пәндер'
+
+
+class UserResult(models.Model):
+
+	user 		= models.ForeignKey(User, on_delete = models.CASCADE)
+	course 		= models.ForeignKey(Course, on_delete = models.CASCADE, default = 0)
+	all_task	= models.CharField('Жалпы сұрақ', max_length = 3)
+	true_task	= models.CharField('Дұрыс сұрақ', max_length = 3)
+	false_task	= models.CharField('Қате сұрақ', max_length = 3)
+	date 		= models.CharField('Уақыты', max_length = 35, default = 'Белгісіз')
+	feedback 	= models.CharField('Кері байланыс', max_length = 520, default = 'Кері байланыс жоқ')
+
+	def __str__(self):
+		return f'{str(self.user.first_name)} {str(self.user.last_name)} - | - {self.feedback}'
+
+	class Meta:
+		verbose_name = 'Қолданушы нәтижесін'
+		verbose_name_plural = 'Қолданушы нәтижелері'

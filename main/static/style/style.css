@@ -175,6 +175,21 @@ nav li i {
 	border: 0;
 
 }
+.task-compiler {
+	width: 775px;
+}
+.task-compiler button{
+	width: 100%;
+	margin: auto;
+	width: 787px;
+
+}
+.t-compiler textarea {
+
+}
+.task-compiler {
+	text-align: left;
+}
 .form-add-course, .task-add-form, .block-content {
 	width: 1000px;
 	margin: auto;
@@ -246,8 +261,14 @@ nav li i {
 	box-shadow: 0 0 2px;
 	border-radius: 5px;
 	background: #fff;
+	position: relative;
 }
+.subject-block span {
+	position: absolute;
+	right: 5px;
+	color: #02a0da;
 
+}
 
 
 * {}
@@ -361,4 +382,64 @@ body {font-family: "Lato", sans-serif;}
 }
 .block-compiler ul{
 	margin-left: 20px;
+}
+.user-result-block {
+	width: 1000px;
+	background: #fff;
+	box-shadow: 0 0 5px;
+	border-radius: 10px;
+	margin: auto;
+	padding: 10px;
+
+}
+.user-result-block h2 {
+	text-align: center;
+	padding: 10px;
+}
+.users-block div {
+	display: inline-block;
+}
+.users-block {
+	padding: 2.5px; 
+	background: #02a0da;
+	font-size: 19px;
+	color: #fff;
+	position: relative;
+	border-top-right-radius: 5px;
+	border-top-left-radius: 5px;
+	margin-top: 5px;
+
+}
+.subject-content a {
+	text-decoration: none;
+	color: #02a0da;
+}
+.user-results {
+	left: 200px;
+	position: absolute;
+
+}
+.user-date {
+	position: absolute;
+	left: 500px;
+}
+.user-result-block summary {
+	display: block;
+	cursor: pointer;
+}
+.feedback-user {
+	padding: 5px;
+	background: #aff;
+	margin-bottom: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+.user-result-block details {
+	box-shadow: 0 0 3px;
+	border-radius: 6px;
+}
+.not-content {
+	text-align: center;
+	margin: 20px 0;
+	color: red;
 }
