@@ -3,6 +3,27 @@ from django.contrib.auth.models import User
 from members.models import Customer
 
 
+class TaskIsIdentify(models.Model):
+	title	= models.CharField('Тапсырма тақырыбы', max_length = 1000)
+	body 	= models.TextField('Тапсырма мәтіні')
+
+	task_1		= models.CharField('Сұрақ', max_length = 200)
+	task_2		= models.CharField('Сұрақ', max_length = 200)
+	task_3		= models.CharField('Сұрақ', max_length = 200)
+	task_4		= models.CharField('Сұрақ', max_length = 200)
+
+	answer_1	= models.CharField('Жауап', max_length = 200)
+	answer_2	= models.CharField('Жауап', max_length = 200)
+	answer_3	= models.CharField('Жауап', max_length = 200)
+	answer_4	= models.CharField('Жауап', max_length = 200)
+
+	def __str__(self):
+		return self.title
+
+	class Meta:
+		verbose_name = 'Тапсырма'
+		verbose_name_plural = 'Тапсырмалар (Сәйкестендір)'
+
 
 class TaskIsFill(models.Model):
 	title	= models.CharField('Тапсырма тақырыбы', max_length = 1000)
@@ -49,11 +70,12 @@ class TaskIsTest(models.Model):
 
 class Course(models.Model):
 	title	= models.CharField('Сабақ тақырыбы', max_length = 75)
-	date	= models.CharField('Сабақ қосылды', max_length = 30)
+	date	= models.DateTimeField('Сабақ уақыты')
 	teacher	= models.CharField('Сабаты қосты', max_length = 30)
 	task_f	= models.ManyToManyField(TaskIsFill, verbose_name='Тапсырма түрі (Код және бос орын)', blank=True, related_name = 'course_task')
 	task_t	= models.ManyToManyField(TaskIsTest, verbose_name='Тапсырма түрі (Тест)', blank=True, related_name = 'course_task')
-
+	task_i 	= models.ManyToManyField(TaskIsIdentify, verbose_name='Тапсырма түрі (Сәйкестендір)', blank=True, related_name = 'course_task')
+	# date_time = models.DateTimeField('Сабақ уақыты')
 	COURSE_TYPE_SELF = '1' 
 
 	COURSE_TYPE_OPTIONS = (

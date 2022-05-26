@@ -1,19 +1,31 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<script type="text/javascript">qestion = []</script>
+<script type="text/javascript">
+qestion = []; 
+var identify_question = [];
+var all_questions = 0;
+</script>
 <div class="container course-container">
 	<div class="course-details-block">
 		<h1>Тақырып - {{ object_course.title }} </h1>
 		<div class="tab">
 			<button class="tablinks" onclick="openTask(event, 'start')" id="defaultOpen">Бастау</button>
-			{% for task_id in object_course.task_f.all %}
-			<button class="tablinks" onclick="openTask(event, 'task_feel_{{ task_id.id }}')" id="open_button_{{ task_id.id }}">{{ task_id.t_type }}</button>
-			{% endfor %}
+			
+			
 
 			{% for task_t_id in object_course.task_t.all %}
 			<button class="tablinks" onclick="openTask(event, 'task_test_{{ task_t_id.id }}')" id="open_button_t_{{ task_t_id.id }}">Тест тапсырмалар</button>
 			{% endfor %}
+
+			{% for task_i_id in object_course.task_i.all %}
+			<button class="tablinks" onclick="openTask(event, 'identify_{{ task_i_id.id }}')" id="identifyOpen{{ task_i_id.id }}">Сәйкестендір</button>
+			{% endfor %}
+
+			{% for task_id in object_course.task_f.all %}
+			<button class="tablinks" onclick="openTask(event, 'task_feel_{{ task_id.id }}')" id="open_button_{{ task_id.id }}">{{ task_id.t_type }}</button>
+			{% endfor %}
+			
 			<button class="tablinks" onclick="openTask(event, 'result')" id="resultSave">Нәтиже</button>
 
 		</div>
@@ -21,99 +33,13 @@
 		<div id="start" class="tabcontent"><br><br>
 			<h3>Сабақты бастау</h3>
 			<p>Сабақты бастағаннан кейін парақты жабуға болмайды!</p>
-		</div> 
-		{% for task_f in object_course.task_f.all %}
+		</div>
 		
-			{% if task_f.t_type == 'Бос орынды толтыр' %}
-			<div id="task_feel_{{ task_f.id }}" class="tabcontent"><br><br>
-				<h3>{{ task_f.title }}</h3>
-				<p><textarea rows="10" disabled>{{ task_f.body|safe }}</textarea></p> 
-				<!-- <p><strong>жауабы:</strong>{{ task_f.answer }}</p> -->
-	 			
-				<div class="input-user" id="input_user_{{ task_f.id }}">
-					<input type="text" placeholder="Жауапты енгіз..." id="user_answer_{{ task_f.id }}">
-					<button onclick="checkAnswer('task_answer_{{ task_f.id }}', 'user_answer_{{ task_f.id }}', 'res_answer_{{ task_f.id }}', 'input_user_{{ task_f.id }}', 'open_button_{{ task_f.id }}', 'task_status_{{ task_f.id }}')">Тексеру</button>
-				</div>
-				<div class="result-block-task" id="res_answer_{{ task_f.id }}"></div>
-			</div>
-			<script type="text/javascript">
-				localStorage.setItem('task_answer_{{ task_f.id }}', '{{ task_f.answer }}')
-				var task_status = localStorage.getItem('task_status_{{ task_f.id }}') 
-					console.log(task_status)
-
-				if (task_status == 'true') { 
-					document.getElementById('res_answer_{{ task_f.id }}').innerHTML = 'Дұрыс'; 
-					// $("#open_button_{{ task_f.id }}").css("background", '#02a0da');
-					document.getElementById('open_button_{{ task_f.id }}').style = ('background:#02a0da');
-					document.getElementById('input_user_{{ task_f.id }}').style = ('display:none');
-					qestion.push(0)
-					  
-				} else if (task_status == false){ 
-					document.getElementById('res_answer_{{ task_f.id }}').innerHTML = 'Қате'; 
-					$("#open_button_{{ task_f.id }}").css("background", 'red');
-					qestion.push(1)  
-				}
-			</script>
-			{% elif task_f.t_type == 'Кодты аяқта' %}
-			<div id="task_feel_{{ task_f.id }}" class="tabcontent t-compiler"><br><br>
-				<h3>{{ task_f.title }}</h3>
-				<p><textarea rows="5" disabled>{{ task_f.body|safe }}</textarea></p>
-				<br> 
-				
-				<div class="block-compiler task-compiler" id="task_compiler_{{ task_f.id }}">
-					<ul> 
-						<li>input() операторын қолданба</li>
-						<li>Нәтижені result деген айнымалыға сақта</li> 
-						<li>Есепті тексеретін 1 мүмкіндік бар</li> 
-						<li>Есепті шығару барысында <a href="{% url 'compiler' %}" target="_blank">Онлайн компиляторды</a> қолдануға болады</li> 
-					</ul>
-					<br>
-					<form action="" method="POST">
-						{% csrf_token %}	
-						<textarea rows="5" name="python_cod"></textarea>
-						<input type="hidden" name="true_answer" value="{{ task_f.answer }}">
-						<input type="hidden" name="task_id" value="{{ task_f.id }}">
-						<button type="submit">Тексеру</button>
-					</form>
-				</div>
-				<div class="result-block-task" id="res_answer_{{ task_f.id }}"></div>
-				<script type="text/javascript">
-					
-					if ('{{ task_key }}' == '{{ task_f.id }}') {
-						if ('{{ compiler_result }}' == 'Дұрыс') {
-							document.getElementById('res_answer_{{ task_f.id }}').innerHTML = 'Дұрыс'; 
-							document.getElementById('open_button_{{ task_f.id }}').style = ('background:#02a0da');
-							document.getElementById('task_compiler_{{ task_f.id }}').style = ('display:none'); 
-							localStorage.setItem('task_compiler_result_{{ task_f.id }}', 'Дұрыс')
-							qestion.push(0)
-						} else if ('{{ compiler_result }}' == 'Қате') {
-							document.getElementById('res_answer_{{ task_f.id }}').innerHTML = 'Қате'; 
-							$("#open_button_{{ task_f.id }}").css("background", 'red');
-							document.getElementById('task_compiler_{{ task_f.id }}').style = ('display:none'); 
-							localStorage.setItem('task_compiler_result_{{ task_f.id }}', 'Қате')
-							qestion.push(1) 
-						}
-					}
-
-					var task_status = localStorage.getItem('task_compiler_result_{{ task_f.id }}') 
-					if (task_status == 'Дұрыс') {
-						document.getElementById('res_answer_{{ task_f.id }}').innerHTML = 'Дұрыс'; 
-						document.getElementById('open_button_{{ task_f.id }}').style = ('background:#02a0da');
-						document.getElementById('task_compiler_{{ task_f.id }}').style = ('display:none'); 
-					} else if (task_status == 'Қате') {
-						document.getElementById('res_answer_{{ task_f.id }}').innerHTML = 'Қате'; 
-						$("#open_button_{{ task_f.id }}").css("background", 'red');
-						document.getElementById('task_compiler_{{ task_f.id }}').style = ('display:none');			
-					}
-					
-				</script>
-				<div class="result-block-task" id="res_answer_{{ task_f.id }}"></div>
-			</div>
-			{% endif %}
 			
+			
+
+
 		
-		
-		{% endfor %}
 
 		{% for task_t in object_course.task_t.all %}
 		<div id="task_test_{{ task_t.id }}" class="tabcontent"><br><br>
@@ -186,10 +112,162 @@
 					document.getElementById('input_3{{ task_t.id }}').disabled = true;
 					document.getElementById('input_4{{ task_t.id }}').disabled = true;
 				}
+				all_questions++
 			</script>
 		</div>
 		{% endfor %}
 
+		{% for task_i in object_course.task_i.all %}
+		<div id="identify_{{ task_i.id }}" class="tabcontent"><br><br>
+			<h3>{{ task_i.body }}</h3>
+			<div class="identify-block">
+				<div class="identify-task">
+					<label>
+						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_1|slice:"1:" }}</span>
+						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_1|slice:"0:1" }}'>
+					</label>
+					<label>
+						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_2|slice:"1:" }}</span>
+						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_2|slice:"0:1" }}'>			
+					</label>
+					<label>
+						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_3|slice:"1:" }}</span>
+						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_3|slice:"0:1" }}'>			
+					</label>
+					<label>
+						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_4|slice:"1:" }}</span>
+						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_4|slice:"0:1" }}'>			
+					</label>
+				</div>
+				<div class="identify-answer">
+					<label>
+						<input type="radio" class="identify_answer{{ task_i.id }}" onclick="checkIdentidyAnswer('identify_answer{{ task_i.id }}', 'identify-answer-text-{{ task_i.id }}')" value='{{ task_i.answer_1|slice:"0:1" }}'>
+						<span class="identify-answer-text-{{ task_i.id }}">{{ task_i.answer_1|slice:"1:" }}</span>
+					</label>
+					<label>
+						<input type="radio" class="identify_answer{{ task_i.id }}" onclick="checkIdentidyAnswer('identify_answer{{ task_i.id }}', 'identify-answer-text-{{ task_i.id }}')" value='{{ task_i.answer_2|slice:"0:1" }}'>
+						<span class="identify-answer-text-{{ task_i.id }}">{{ task_i.answer_2|slice:"1:" }}</span>
+					</label>
+					<label>
+						<input type="radio" class="identify_answer{{ task_i.id }}" onclick="checkIdentidyAnswer('identify_answer{{ task_i.id }}', 'identify-answer-text-{{ task_i.id }}')" value='{{ task_i.answer_3|slice:"0:1" }}'>
+						<span class="identify-answer-text-{{ task_i.id }}">{{ task_i.answer_3|slice:"1:" }}</span>
+					</label>
+					<label>
+						<input type="radio" class="identify_answer{{ task_i.id }}" onclick="checkIdentidyAnswer('identify_answer{{ task_i.id }}', 'identify-answer-text-{{ task_i.id }}')" value='{{ task_i.answer_4|slice:"0:1" }}'>
+						<span class="identify-answer-text-{{ task_i.id }}">{{ task_i.answer_4|slice:"1:" }}</span>
+					</label>
+				</div>
+				
+			</div>
+			<div class="result-block-task" id="res_answer_identify_{{ task_i.id }}"></div>
+			<button id="res_answer_identify_button_{{ task_i.id }}" onclick="checkIdentidyButton(identify_question, 'res_answer_identify_{{ task_i.id }}', 'identify_task_{{ task_i.id }}', 'res_answer_identify_button_{{ task_i.id }}', 'identifyOpen{{ task_i.id}}')">Тексеру</button>
+
+			<script type="text/javascript">
+				var task_id_identify_task = localStorage.getItem('identify_task_{{ task_i.id }}');
+				if (task_id_identify_task == 'Дұрыс') {
+					document.getElementById('res_answer_identify_{{ task_i.id }}').innerHTML = 'Дұрыс';
+					$("#" + 'identifyOpen{{ task_i.id}}').css("background", '#02a0da'); 
+					qestion.push(0) 
+				} else if (task_id_identify_task == 'Қате') {
+					document.getElementById('res_answer_identify_{{ task_i.id }}').innerHTML = 'Қате';
+					$("#" + 'identifyOpen{{ task_i.id}}').css("background", 'red'); 
+					qestion.push(1)
+				}
+				all_questions++
+			</script>
+		</div>
+		{% endfor %}
+
+		{% for task_f in object_course.task_f.all %}
+		
+			{% if task_f.t_type == 'Бос орынды толтыр' %}
+			<div id="task_feel_{{ task_f.id }}" class="tabcontent"><br><br>
+				<h3>{{ task_f.title }}</h3>
+				<p><textarea rows="10" disabled>{{ task_f.body|safe }}</textarea></p> 
+				<!-- <p><strong>жауабы:</strong>{{ task_f.answer }}</p> -->
+	 			
+				<div class="input-user" id="input_user_{{ task_f.id }}">
+					<input type="text" placeholder="Жауапты енгіз..." id="user_answer_{{ task_f.id }}">
+					<button onclick="checkAnswer('task_answer_{{ task_f.id }}', 'user_answer_{{ task_f.id }}', 'res_answer_{{ task_f.id }}', 'input_user_{{ task_f.id }}', 'open_button_{{ task_f.id }}', 'task_status_{{ task_f.id }}')">Тексеру</button>
+				</div>
+				<div class="result-block-task" id="res_answer_{{ task_f.id }}"></div>
+			</div>
+			<script type="text/javascript">
+				localStorage.setItem('task_answer_{{ task_f.id }}', '{{ task_f.answer }}')
+				var task_status = localStorage.getItem('task_status_{{ task_f.id }}') 
+					console.log(task_status)
+
+				if (task_status == 'true') { 
+					document.getElementById('res_answer_{{ task_f.id }}').innerHTML = 'Дұрыс'; 
+					// $("#open_button_{{ task_f.id }}").css("background", '#02a0da');
+					document.getElementById('open_button_{{ task_f.id }}').style = ('background:#02a0da');
+					document.getElementById('input_user_{{ task_f.id }}').style = ('display:none');
+					qestion.push(0)
+					  
+				} else if (task_status == false){ 
+					document.getElementById('res_answer_{{ task_f.id }}').innerHTML = 'Қате'; 
+					$("#open_button_{{ task_f.id }}").css("background", 'red');
+					qestion.push(1)  
+				}
+				all_questions++
+			</script>
+			{% elif task_f.t_type == 'Кодты аяқта' %}
+			<div id="task_feel_{{ task_f.id }}" class="tabcontent t-compiler"><br><br>
+				<h3>{{ task_f.title }}</h3>
+				<p><textarea rows="5" disabled>{{ task_f.body|safe }}</textarea></p>
+				<br> 
+				
+				<div class="block-compiler task-compiler" id="task_compiler_{{ task_f.id }}">
+					<ul> 
+						<li>input() операторын қолданба</li>
+						<li>Нәтижені result деген айнымалыға сақта</li> 
+						<li>Есепті тексеретін 1 мүмкіндік бар</li> 
+						<li>Есепті шығару барысында <a href="{% url 'compiler' %}" target="_blank">Онлайн компиляторды</a> қолдануға болады</li> 
+					</ul>
+					<br>
+					<form action="" method="POST">
+						{% csrf_token %}	
+						<textarea rows="5" name="python_cod"></textarea>
+						<input type="hidden" name="true_answer" value="{{ task_f.answer }}">
+						<input type="hidden" name="task_id" value="{{ task_f.id }}">
+						<button type="submit">Тексеру</button>
+					</form>
+				</div>
+				<div class="result-block-task" id="res_answer_{{ task_f.id }}"></div>
+				<script type="text/javascript">
+					
+					if ('{{ task_key }}' == '{{ task_f.id }}') {
+						if ('{{ compiler_result }}' == 'Дұрыс') {
+							document.getElementById('res_answer_{{ task_f.id }}').innerHTML = 'Дұрыс'; 
+							document.getElementById('open_button_{{ task_f.id }}').style = ('background:#02a0da');
+							document.getElementById('task_compiler_{{ task_f.id }}').style = ('display:none'); 
+							localStorage.setItem('task_compiler_result_{{ task_f.id }}', 'Дұрыс')
+							qestion.push(0)
+						} else if ('{{ compiler_result }}' == 'Қате') {
+							document.getElementById('res_answer_{{ task_f.id }}').innerHTML = 'Қате'; 
+							$("#open_button_{{ task_f.id }}").css("background", 'red');
+							document.getElementById('task_compiler_{{ task_f.id }}').style = ('display:none'); 
+							localStorage.setItem('task_compiler_result_{{ task_f.id }}', 'Қате')
+							qestion.push(1) 
+						}
+					}
+
+					var task_status = localStorage.getItem('task_compiler_result_{{ task_f.id }}') 
+					if (task_status == 'Дұрыс') {
+						document.getElementById('res_answer_{{ task_f.id }}').innerHTML = 'Дұрыс'; 
+						document.getElementById('open_button_{{ task_f.id }}').style = ('background:#02a0da');
+						document.getElementById('task_compiler_{{ task_f.id }}').style = ('display:none'); 
+					} else if (task_status == 'Қате') {
+						document.getElementById('res_answer_{{ task_f.id }}').innerHTML = 'Қате'; 
+						$("#open_button_{{ task_f.id }}").css("background", 'red');
+						document.getElementById('task_compiler_{{ task_f.id }}').style = ('display:none');			
+					}
+					all_questions++
+				</script>
+				<div class="result-block-task" id="res_answer_{{ task_f.id }}"></div>
+			</div>
+			{% endif %}	
+		{% endfor %}
 
 		<div id="result" class="tabcontent"><br><br>
 			<h3>Сабақты аяқтау</h3>
@@ -198,8 +276,7 @@
 			<div class="result-block">
 				<div id="all_answer"></div> 
 				<div id="true_answer"></div> 
-				<div id="false_answer"></div>
-				<!-- <div id="procent_answer"></div> -->
+				<div id="false_answer"></div> 
 				<div class="input-user">	
 					<form action="{% url 'save_result' %}" method="POST">
 						{% csrf_token %}

@@ -19,47 +19,14 @@
 		<div id="open_menu">☰<span id="open_menu_text"></span></div>
 		<ul>
 			<li><a href="{% url 'main' %}"><i class="fas fa-home"></i> <span class="nav-link-text">Басты парақ</span></a></li>
-			<li><a href=""><i class="fas fa-newspaper"></i> <span class="nav-link-text">Жаңалықтар</span></a></li>
 			<li><a href="{% url 'compiler' %}"><i class="fas fa-code"></i> <span class="nav-link-text">Компилятор</span></a></li>
-			<li><a href="{% url 'subject' %}"><i class="fas fa-graduation-cap"></i> <span class="nav-link-text">Мектеп</span></a></li>
-			<!-- <li>
-				<details>
-					<summary style="color: #378752;"><i class="fas fa-laptop-code"></i> <span class="nav-link-text">Информатика</span></summary>
-					<details class="details-in-nav">
-						<summary>6 - сынып</summary>
-						<div class="nav-details-content">
-							<a href="#">IDE - мен танысу</a>
-							<a href="#">IDE - мен танысу</a>
-							<a href="#">IDE - мен танысу</a>
-							<a href="#">Тіл алфабиті синтаксис</a>
-						</div>
-					</details>
-					<details class="details-in-nav">
-						<summary>7 - сынып</summary>
-						<div class="nav-details-content">
-							<a href="#">IDE - мен танысу</a>
-							<a href="#">IDE - мен танысу</a>
-							<a href="#">IDE - мен танысу</a>
-							<a href="#">Тіл алфабиті синтаксис</a>
-						</div>
-					</details>
-					<details class="details-in-nav">
-						<summary>8 - сынып</summary>
-						<div class="nav-details-content">
-							<a href="#">IDE - мен танысу</a>
-							<a href="#">IDE - мен танысу</a>
-							<a href="#">IDE - мен танысу</a>
-							<a href="#">Тіл алфабиті синтаксис</a>
-						</div>
-					</details>
-				</details>
-			</li> -->
+			<li><a href="{% url 'subject' %}"><i class="fas fa-graduation-cap"></i> <span class="nav-link-text">Мектеп</span></a></li> 
 			<li><a href="https://kundelik.kz/" target="_blank"><i class="fas fa-book-reader"></i> <span class="nav-link-text">Kundelik.kz</span></a></li>
+			<li><a href="{% url 'documentation' %}"><i class="fas fa-newspaper"></i> <span class="nav-link-text">Нұсқаулық</span></a></li>
 			
 
-			{% if request.user.is_authenticated %}
-			<!-- <li><a href="{% url 'task_add' %}"><i class="fas fa-book-reader"></i> <span class="nav-link-text">Тапсырма қосу</span></a></li> -->
-			<li><a href="{% url 'add_course' %}"><i class="fas fa-wrench"></i> <span class="nav-link-text">Сабақ қосу</span></a></li>
+			{% if request.user.is_authenticated %} 
+			<!-- <li><a href="{% url 'add_course' %}"><i class="fas fa-wrench"></i> <span class="nav-link-text">Сабақ қосу</span></a></li> -->
 			<li><span class="nav-link-text"><a href="{% url 'members' %}"><i class="fas fa-user-graduate"></i> {{ request.user }}</a> <a href="{% url 'logout' %}" id="logout">шығу</a></span></li>
 			{% else %}
 			<li><a href="{% url 'members' %}"><i class="fas fa-user-graduate"></i> <span class="nav-link-text">Аккаунт ашу</span></a></li>
@@ -72,8 +39,7 @@
 		{% endblock %}
 	</main>
 	<script src="https://kit.fontawesome.com/e9b4a4c6c5.js" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="{% static 'scripts/script.js' %}"></script>
-	<!-- <script type="text/javascript" src="{% static 'scripts/course.js' %}"></script>	 -->
+	<script type="text/javascript" src="{% static 'scripts/script.js' %}"></script> 
 
 	{% block script %}
 	{% endblock %}
