@@ -2,6 +2,8 @@ var selected_task;
 var selected_answer;
 var colors = ['yellow', 'red', 'blue', 'green', 'gray', 'greenyellow', 'cyan']
 var color_id = 0
+var fasle_questions_in_answer = '';
+
 function openTask(evt, cityName) {
 	var i, tabcontent, tablinks;
 	tabcontent = document.getElementsByClassName("tabcontent");
@@ -22,13 +24,13 @@ function openTask(evt, cityName) {
 	document.getElementById("id_all_task").value = all_questions
 	document.getElementById("id_true_task").value = true_q
 	document.getElementById("id_false_task").value = qestion.reduce((a, b) => a + b, 0)
-
+	document.getElementById("id_user_false_answers").value = fasle_questions_in_answer
+	// console.log(fasle_questions_in_answer)
 }
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
 
-
-function checkAnswer(task, user, result, input_block, input_style, task_status) {  
+function checkAnswer(task, user, result, input_block, input_style, task_status, question_body) {  
 	var user_answer = document.getElementById(user).value;	
 	var true_answer = localStorage.getItem(task);
 	if (user_answer == true_answer) {
@@ -45,16 +47,13 @@ function checkAnswer(task, user, result, input_block, input_style, task_status) 
 		$("#" + input_style).css("background", 'red');
 		qestion.push(1) 
 		localStorage.setItem(task_status, 'false')
+		fasle_questions_in_answer += question_body;
 
 	}
 	$("#" + input_block).css("display", 'none');
-	// document.getElementById("procent_answer").innerHTML = (qestion.reduce((a, b) => a + b, 0)) / qestion.length;
-	// console.log(qestion)
-	// console.log(qestion.length)
-	// console.log(qestion.reduce((a, b) => a + b, 0))
 }
 
-function checkAnswerTest(user_answer, true_answer, result, input_style, task_test_block, task_status) {
+function checkAnswerTest(user_answer, true_answer, result, input_style, task_test_block, task_status, question_body) {
 	if (user_answer == true_answer) {
 		console.log(true)
 		document.getElementById(result).innerHTML = 'Дұрыс'; 
@@ -68,16 +67,8 @@ function checkAnswerTest(user_answer, true_answer, result, input_style, task_tes
 		$("#" + input_style).css("background", 'red');
 		qestion.push(1) 
 		localStorage.setItem(task_status, 'false')
-		
-	}
-	// var false_q = qestion.length - qestion.reduce((a, b) => a + b, 0)
-	// document.getElementById("all_answer").innerHTML = 'Барлығы ' + qestion.length
-	// document.getElementById("true_answer").innerHTML = 'Дұрыс ' + false_q
-	// document.getElementById("false_answer").innerHTML = 'Қате ' + qestion.reduce((a, b) => a + b, 0)
-	// document.getElementById("procent_answer").innerHTML = (qestion.reduce((a, b) => a + b, 0)) / qestion.length;
-	// console.log(qestion)
-	// console.log(qestion.length)
-	// console.log(qestion.reduce((a, b) => a + b, 0))
+		fasle_questions_in_answer += question_body;
+	} 
 	$("." + task_test_block + " input").prop("disabled", true);
 
 }
@@ -125,7 +116,7 @@ function checkIdentidyAnswer(name, border_color) {
 	}
 }
 
-function  checkIdentidyButton(identify_question, result_block, task_id, button, identifyOpen){
+function  checkIdentidyButton(identify_question, result_block, task_id, button, identifyOpen, question_body){
 	console.log(identify_question)
 	console.log(identify_question.reduce((a, b) => a + b, 0))
 
@@ -140,7 +131,8 @@ function  checkIdentidyButton(identify_question, result_block, task_id, button, 
 		document.getElementById(result_block).innerHTML = 'Қате';
 		localStorage.setItem(task_id, 'Қате')		
 		$("#" + identifyOpen).css("background", 'red'); 
-		qestion.push(1) 
+		qestion.push(1) 	
+		fasle_questions_in_answer += question_body;
 
 	}
 	document.getElementById(button).style.display = 'none';

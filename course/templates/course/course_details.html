@@ -9,6 +9,7 @@ var all_questions = 0;
 <div class="container course-container">
 	<div class="course-details-block">
 		<h1>Тақырып - {{ object_course.title }} </h1>
+		{% if not user_result  %}
 		<div class="tab">
 			<button class="tablinks" onclick="openTask(event, 'start')" id="defaultOpen">Бастау</button>
 			
@@ -33,6 +34,7 @@ var all_questions = 0;
 		<div id="start" class="tabcontent"><br><br>
 			<h3>Сабақты бастау</h3>
 			<p>Сабақты бастағаннан кейін парақты жабуға болмайды!</p>
+
 		</div>
 		
 			
@@ -53,7 +55,8 @@ var all_questions = 0;
 						'res_answer_t_{{ task_t.id }}',
 						'open_button_t_{{ task_t.id }}',
 						'task-test-{{ task_t.id }}',
-						'task_status_{{ task_t.id }}')">
+						'task_status_{{ task_t.id }}',
+						'<p>{{ task_t.body|safe }}</p>')">
 					<div class="answer-block-test" >{{ task_t.answer_1 }}</div>	
 				</label>
 				<label class="task-test-{{ task_t.id }}">
@@ -63,7 +66,8 @@ var all_questions = 0;
 						'res_answer_t_{{ task_t.id }}',
 						'open_button_t_{{ task_t.id }}',
 						'task-test-{{ task_t.id }}',
-						'task_status_{{ task_t.id }}')">
+						'task_status_{{ task_t.id }}',
+						'<p>{{ task_t.body|safe }}</p>')">
 					<div class="answer-block-test">{{ task_t.answer_2 }}</div>	
 				</label>
 				<label class="task-test-{{ task_t.id }}">
@@ -73,7 +77,8 @@ var all_questions = 0;
 						'res_answer_t_{{ task_t.id }}',
 						'open_button_t_{{ task_t.id }}',
 						'task-test-{{ task_t.id }}',
-						'task_status_{{ task_t.id }}')">
+						'task_status_{{ task_t.id }}',
+						'<p>{{ task_t.body|safe }}</p>')">
 					<div class="answer-block-test">{{ task_t.answer_3 }}</div>	
 				</label>
 				<label class="task-test-{{ task_t.id }}">
@@ -83,7 +88,8 @@ var all_questions = 0;
 						'res_answer_t_{{ task_t.id }}',
 						'open_button_t_{{ task_t.id }}',
 						'task-test-{{ task_t.id }}',
-						'task_status_{{ task_t.id }}')">
+						'task_status_{{ task_t.id }}',
+						'<p>{{ task_t.body|safe }}</p>')">
 					<div class="answer-block-test">{{ task_t.answer_4 }}</div>	
 				</label> 
 
@@ -124,19 +130,19 @@ var all_questions = 0;
 				<div class="identify-task">
 					<label>
 						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_1|slice:"1:" }}</span>
-						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_1|slice:"0:1" }}'>
+						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_1|slice:"0:1" }},'>
 					</label>
 					<label>
 						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_2|slice:"1:" }}</span>
-						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_2|slice:"0:1" }}'>			
+						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_2|slice:"0:1" }},'>			
 					</label>
 					<label>
 						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_3|slice:"1:" }}</span>
-						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_3|slice:"0:1" }}'>			
+						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_3|slice:"0:1" }},'>			
 					</label>
 					<label>
 						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_4|slice:"1:" }}</span>
-						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_4|slice:"0:1" }}'>			
+						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_4|slice:"0:1" }},'>			
 					</label>
 				</div>
 				<div class="identify-answer">
@@ -160,7 +166,7 @@ var all_questions = 0;
 				
 			</div>
 			<div class="result-block-task" id="res_answer_identify_{{ task_i.id }}"></div>
-			<button id="res_answer_identify_button_{{ task_i.id }}" onclick="checkIdentidyButton(identify_question, 'res_answer_identify_{{ task_i.id }}', 'identify_task_{{ task_i.id }}', 'res_answer_identify_button_{{ task_i.id }}', 'identifyOpen{{ task_i.id}}')">Тексеру</button>
+			<button id="res_answer_identify_button_{{ task_i.id }}" onclick="checkIdentidyButton(identify_question, 'res_answer_identify_{{ task_i.id }}', 'identify_task_{{ task_i.id }}', 'res_answer_identify_button_{{ task_i.id }}', 'identifyOpen{{ task_i.id}}', '<p>{{ task_i.body|safe }}</p>')">Тексеру</button>
 
 			<script type="text/javascript">
 				var task_id_identify_task = localStorage.getItem('identify_task_{{ task_i.id }}');
@@ -188,7 +194,7 @@ var all_questions = 0;
 	 			
 				<div class="input-user" id="input_user_{{ task_f.id }}">
 					<input type="text" placeholder="Жауапты енгіз..." id="user_answer_{{ task_f.id }}">
-					<button onclick="checkAnswer('task_answer_{{ task_f.id }}', 'user_answer_{{ task_f.id }}', 'res_answer_{{ task_f.id }}', 'input_user_{{ task_f.id }}', 'open_button_{{ task_f.id }}', 'task_status_{{ task_f.id }}')">Тексеру</button>
+					<button onclick="checkAnswer('task_answer_{{ task_f.id }}', 'user_answer_{{ task_f.id }}', 'res_answer_{{ task_f.id }}', 'input_user_{{ task_f.id }}', 'open_button_{{ task_f.id }}', 'task_status_{{ task_f.id }}', '<p>{{ task_f.body|safe }}</p>')">Тексеру</button>
 				</div>
 				<div class="result-block-task" id="res_answer_{{ task_f.id }}"></div>
 			</div>
@@ -284,12 +290,36 @@ var all_questions = 0;
 						<input type="hidden" name="all_task" maxlength="3" required id="id_all_task">
 						<input type="hidden" name="true_task" maxlength="3" required id="id_true_task">
 						<input type="hidden" name="false_task" maxlength="3" required id="id_false_task">
+						<input type="hidden" name="user_false_answers" required id="id_user_false_answers">
 						<input type="text" name="feedback" maxlength="520" required id="id_feedback" 	placeholder="Кері байланыс">
 						<button id="button_save" onclick="localStorage.clear()">Сақтау</button>
 					</form>
 				</div>
 			</div>
 		</div>
+		{% else  %}
+		<div class="tab">
+			<!-- <button class="tablinks" onclick="openTask(event, 'result')" id="resultSave"></button> -->
+		</div>
+		<div id="result" class="tabcontent"><br><br>
+			<h3>Нәтиже</h3>
+			<p>Сіз сабақты өтіп қойдыңыз</p> 
+			{% for res in user_result %}
+			<div class="result-block">
+				<div id="all_answer">Барлығы {{ res.all_task }}</div> 
+				<div id="true_answer">Дұрыс {{ res.true_task }}</div> 
+				<div id="false_answer">Қате {{ res.false_task }}</div> 
+				 
+			</div>
+			{% if res.user_false_answers %}
+			<div class="false-answers-block">
+				<h3>Қате сұрақтар</h3>
+				{{ res.user_false_answers|safe }}
+			</div>
+			{% endif %}
+			{% endfor %}
+		</div>
+		{% endif %}
 	</div>
 </div>
 {% endblock %}

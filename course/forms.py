@@ -32,5 +32,5 @@ class AddCoruseForm(forms.ModelForm):
 class UserResultForm(forms.ModelForm):
     class Meta:
         model = UserResult
-        fields = ('course', 'all_task', 'true_task', 'false_task', 'feedback')
+        fields = ('course', 'all_task', 'true_task', 'false_task', 'feedback', 'user_false_answers')
         exclude = ['user', 'date']

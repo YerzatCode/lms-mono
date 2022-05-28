@@ -6,9 +6,13 @@ from .models import Course, Subject, UserResult
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from random import randint
 from datetime import datetime
+from django.http import HttpResponseRedirect
+# course = ''
 
 
 def course_details_view(request, pk):
+
+	global course
 	result = 'Қазірше бос'
 	task_key = None
 	if request.method == 'POST':
@@ -19,12 +23,17 @@ def course_details_view(request, pk):
 		if str(res) == str(answer):
 			result = 'Дұрыс'
 		else:
-			result = 'Қате' 
+			result = 'Қате'
+	request.course = Course.objects.get(id = pk)
+	print(request.course.id)
+	user_result =  UserResult.objects.filter(course = request.course, user = request.user.id)
+	print(user_result)
 	data = {
 		'range': [str(i) for i in range(1, 12)],
-		'object_course': Course.objects.get(id = pk),
-		'compiler_result': result,
-		'task_key': task_key,
+		'object_course':	request.course,
+		'compiler_result':	result,
+		'task_key':			task_key,
+		'user_result':		user_result,
 	}
 	return render(request, 'course/course_details.html', data)
 
@@ -147,8 +156,10 @@ def save_user_result(request):
 			form = form.save(commit = False)
 			form.date = datetime.now()
 			form.user = request.user
+			print(form.course.id)
+
 			form.save()
-			return redirect('main')
+			return HttpResponseRedirect('/course/detail/' + str(form.course.id))
 
 	form = UserResultForm()
 

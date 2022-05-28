@@ -127,7 +127,8 @@ class UserResult(models.Model):
 	false_task	= models.CharField('Қате сұрақ', max_length = 3)
 	date 		= models.CharField('Уақыты', max_length = 35, default = 'Белгісіз')
 	feedback 	= models.CharField('Кері байланыс', max_length = 520, default = 'Кері байланыс жоқ')
-
+	user_false_answers = models.TextField('Қате сұрақтар', blank = True, default = 'Қате сұрақтар белгісіз')
+	
 	def __str__(self):
 		return f'{str(self.user.first_name)} {str(self.user.last_name)} - | - {self.feedback}'
 
