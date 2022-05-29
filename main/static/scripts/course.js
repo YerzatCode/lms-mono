@@ -2,7 +2,6 @@ var selected_task;
 var selected_answer;
 var colors = ['yellow', 'red', 'blue', 'green', 'gray', 'greenyellow', 'cyan']
 var color_id = 0
-var fasle_questions_in_answer = '';
 
 function openTask(evt, cityName) {
 	var i, tabcontent, tablinks;
@@ -24,8 +23,9 @@ function openTask(evt, cityName) {
 	document.getElementById("id_all_task").value = all_questions
 	document.getElementById("id_true_task").value = true_q
 	document.getElementById("id_false_task").value = qestion.reduce((a, b) => a + b, 0)
-	document.getElementById("id_user_false_answers").value = fasle_questions_in_answer
-	// console.log(fasle_questions_in_answer)
+	var fasle_question = localStorage.getItem('flase_question_body');
+	document.getElementById("id_user_false_answers").value = fasle_question
+	console.log(fasle_question)
 }
 // Get the element with id="defaultOpen" and click on it
 document.getElementById("defaultOpen").click();
@@ -46,8 +46,9 @@ function checkAnswer(task, user, result, input_block, input_style, task_status, 
 		document.getElementById(result).innerHTML = 'Қате'; 
 		$("#" + input_style).css("background", 'red');
 		qestion.push(1) 
-		localStorage.setItem(task_status, 'false')
+		localStorage.setItem( task_status, 'false' )
 		fasle_questions_in_answer += question_body;
+		localStorage.setItem( 'flase_question_body', fasle_questions_in_answer );
 
 	}
 	$("#" + input_block).css("display", 'none');
@@ -68,6 +69,7 @@ function checkAnswerTest(user_answer, true_answer, result, input_style, task_tes
 		qestion.push(1) 
 		localStorage.setItem(task_status, 'false')
 		fasle_questions_in_answer += question_body;
+		localStorage.setItem( 'flase_question_body', fasle_questions_in_answer );
 	} 
 	$("." + task_test_block + " input").prop("disabled", true);
 
@@ -135,6 +137,8 @@ function  checkIdentidyButton(identify_question, result_block, task_id, button, 
 		$("#" + identifyOpen).css("background", 'red'); 
 		qestion.push(1) 	
 		fasle_questions_in_answer += question_body;
+		localStorage.setItem( 'flase_question_body', fasle_questions_in_answer );
+
 
 	}
 	document.getElementById(button).style.display = 'none';

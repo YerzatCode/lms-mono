@@ -5,6 +5,8 @@
 qestion = []; 
 var identify_question = [];
 var all_questions = 0;
+var fasle_questions_in_answer = '';
+
 </script>
 
 {% if request.user.is_authenticated %}
@@ -256,6 +258,8 @@ var all_questions = 0;
 							$("#open_button_{{ task_f.id }}").css("background", 'red');
 							document.getElementById('task_compiler_{{ task_f.id }}').style = ('display:none'); 
 							localStorage.setItem('task_compiler_result_{{ task_f.id }}', 'Қате')
+							fasle_questions_in_answer += '<p>{{ task_f.body|safe }}</p>';
+							localStorage.setItem('flase_question_body', fasle_questions_in_answer)
 							qestion.push(1) 
 						}
 					}
