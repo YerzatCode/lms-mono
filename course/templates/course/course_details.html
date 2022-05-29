@@ -6,6 +6,8 @@ qestion = [];
 var identify_question = [];
 var all_questions = 0;
 </script>
+
+{% if request.user.is_authenticated %}
 <div class="container course-container">
 	<div class="course-details-block">
 		<h1>Тақырып - {{ object_course.title }} </h1>
@@ -130,19 +132,19 @@ var all_questions = 0;
 				<div class="identify-task">
 					<label>
 						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_1|slice:"1:" }}</span>
-						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_1|slice:"0:1" }},'>
+						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_1|slice:"0:1" }}'>
 					</label>
 					<label>
 						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_2|slice:"1:" }}</span>
-						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_2|slice:"0:1" }},'>			
+						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_2|slice:"0:1" }}'>			
 					</label>
 					<label>
 						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_3|slice:"1:" }}</span>
-						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_3|slice:"0:1" }},'>			
+						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_3|slice:"0:1" }}'>			
 					</label>
 					<label>
 						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_4|slice:"1:" }}</span>
-						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_4|slice:"0:1" }},'>			
+						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_4|slice:"0:1" }}'>			
 					</label>
 				</div>
 				<div class="identify-answer">
@@ -322,6 +324,12 @@ var all_questions = 0;
 		{% endif %}
 	</div>
 </div>
+
+{% else %}
+<div class="container" style="text-align: center;">
+	<h1>Сізге аккаунт керек:)</h1>
+</div>
+{% endif %}
 {% endblock %}
 
 {% block script %}

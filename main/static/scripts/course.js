@@ -96,7 +96,7 @@ function checkIdentidyAnswer(name, border_color) {
 	for (i = 0; i < task_name.length; i++) {
 		if (task_name[i].checked){
 			selected_answer = task_name[i].value;
-			console.log(selected_answer)
+			// console.log(selected_answer)
 			task_name[i].disabled = true;
 			task_name[i].checked = false;
 			border_color[i].style = ('border: 1px solid ' + colors[color_id])
@@ -107,6 +107,8 @@ function checkIdentidyAnswer(name, border_color) {
 
 		} 
 	} 
+	console.log(selected_answer)
+	console.log(selected_task)
 	if (selected_answer == selected_task) {
 		console.log(true)  
 		identify_question.push(0) 
