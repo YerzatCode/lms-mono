@@ -71,7 +71,7 @@ class TaskIsTest(models.Model):
 class Course(models.Model):
 	title	= models.CharField('Сабақ тақырыбы', max_length = 75)
 	date	= models.DateTimeField('Сабақ уақыты')
-	teacher	= models.ForeignKey(User, verbose_name = 'Сабаты қосты', on_delete = models.CASCADE)
+	teacher	= models.ForeignKey(User, verbose_name = 'Сабақты қосты', on_delete = models.CASCADE)
 	task_f	= models.ManyToManyField(TaskIsFill, verbose_name='Тапсырма түрі (Код және бос орын)', blank=True, related_name = 'course_task')
 	task_t	= models.ManyToManyField(TaskIsTest, verbose_name='Тапсырма түрі (Тест)', blank=True, related_name = 'course_task')
 	task_i 	= models.ManyToManyField(TaskIsIdentify, verbose_name='Тапсырма түрі (Сәйкестендір)', blank=True, related_name = 'course_task')
