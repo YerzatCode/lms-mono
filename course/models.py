@@ -52,13 +52,13 @@ class TaskIsFill(models.Model):
 
 
 class TaskIsTest(models.Model):
-	title			= models.CharField('Тапсырма тақырыбы', max_length = 75)
+	title			= models.CharField('Тапсырма тақырыбы', max_length = 200)
 	body			= models.TextField('Тапсырма мәтіні және коды')
-	answer_true		= models.CharField('Тапсырма жауабы', max_length = 25)
-	answer_1	= models.CharField('Нұсқа (1)', max_length = 25)
-	answer_2	= models.CharField('Нұсқа (2)', max_length = 25)
-	answer_3	= models.CharField('Нұсқа (3)', max_length = 25)
-	answer_4	= models.CharField('Нұсқа (4)', max_length = 25, default = 'Нұсқа (4)')
+	answer_true		= models.CharField('Тапсырма жауабы', max_length = 200)
+	answer_1	= models.CharField('Нұсқа (1)', max_length = 200)
+	answer_2	= models.CharField('Нұсқа (2)', max_length = 200)
+	answer_3	= models.CharField('Нұсқа (3)', max_length = 200)
+	answer_4	= models.CharField('Нұсқа (4)', max_length = 200, default = 'Нұсқа (4)')
 
 	def __str__(self):
 		return self.title
@@ -71,7 +71,7 @@ class TaskIsTest(models.Model):
 class Course(models.Model):
 	title	= models.CharField('Сабақ тақырыбы', max_length = 75)
 	date	= models.DateTimeField('Сабақ уақыты')
-	teacher	= models.CharField('Сабаты қосты', max_length = 30)
+	teacher	= models.ForeignKey(User, verbose_name = 'Сабаты қосты', on_delete = models.CASCADE)
 	task_f	= models.ManyToManyField(TaskIsFill, verbose_name='Тапсырма түрі (Код және бос орын)', blank=True, related_name = 'course_task')
 	task_t	= models.ManyToManyField(TaskIsTest, verbose_name='Тапсырма түрі (Тест)', blank=True, related_name = 'course_task')
 	task_i 	= models.ManyToManyField(TaskIsIdentify, verbose_name='Тапсырма түрі (Сәйкестендір)', blank=True, related_name = 'course_task')
