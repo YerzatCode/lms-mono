@@ -1,21 +1,34 @@
 {% extends 'base.html' %}
 {% load static %}
+{% block title %} - {{ object_course.title }}{% endblock %}
 {% block content %}
 <script type="text/javascript">
 qestion = []; 
 var identify_question = [];
 var all_questions = 0;
 var fasle_questions_in_answer = '';
-
+var open_button_id = [0];
+var button_id = 1;
 </script>
 
 {% if request.user.is_authenticated %}
 <div class="container course-container">
-	<div class="course-details-block">
+	<div class="course-details-block clear-fix">
 		<h1>Тақырып - {{ object_course.title }} </h1>
 		{% if not user_result  %}
 		<div class="tab">
-			<button class="tablinks" onclick="openTask(event, 'start')" id="defaultOpen">Бастау</button>
+			<span class="tab-open-button" style="display:none;">
+				<button>
+					<i class="fas fa-arrow-right"></i>
+				</button>
+			</span>
+			<span class="tab-close-button" style="display:none;">
+				<button>
+					<i class="fas fa-arrow-right"></i>
+				</button>
+			</span>
+			
+			<button class="tablinks" onclick="openTask(event, 'start')" id="defaultOpen">Лекция</button>
 			
 			
 
@@ -36,9 +49,17 @@ var fasle_questions_in_answer = '';
 		</div>
 
 		<div id="start" class="tabcontent"><br><br>
-			<h3>Сабақты бастау</h3>
+			{% if not subject_lection %}
+			<h3>Сабақты бастай беріңіз лекция берілмеген</h3>
 			<p>Сабақты бастағаннан кейін парақты жабуға болмайды!</p>
-
+			{% else %}
+			<h3>{{ subject_lection.title }}</h3>
+			<span>{{ subject_lection.youtube_iframe_tag|safe}}</span>
+			<p>{{ subject_lection.body|safe}}</p>
+			{% endif %}
+			<!-- <div class="tabbuttons">
+				<button>Артқа</button> 
+			</div> -->
 		</div>
 		
 			
@@ -99,6 +120,7 @@ var fasle_questions_in_answer = '';
 
 			</div>
 			<div class="result-block-task" id="res_answer_t_{{ task_t.id }}"></div>
+			
 			<script type="text/javascript"> 
 				// document.getElementById("procent_answer").innerHTML = (qestion.reduce((a, b) => a + b, 0)) / qestion.length; 
 				// $("." + task_test_block + " input").prop("disabled", true);
@@ -134,19 +156,19 @@ var fasle_questions_in_answer = '';
 				<div class="identify-task">
 					<label>
 						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_1|slice:"1:" }}</span>
-						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_1|slice:"0:1" }}'>
+						<input type="radio" class="identify_task identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_1|slice:"0:1" }}'>
 					</label>
 					<label>
 						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_2|slice:"1:" }}</span>
-						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_2|slice:"0:1" }}'>			
+						<input type="radio" class="identify_task identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_2|slice:"0:1" }}'>			
 					</label>
 					<label>
 						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_3|slice:"1:" }}</span>
-						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_3|slice:"0:1" }}'>			
+						<input type="radio" class="identify_task identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_3|slice:"0:1" }}'>			
 					</label>
 					<label>
 						<span class="identify-task-text-{{ task_i.id }}">{{ task_i.task_4|slice:"1:" }}</span>
-						<input type="radio" class="identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_4|slice:"0:1" }}'>			
+						<input type="radio" class="identify_task identify_task{{ task_i.id }}" onclick="checkIdentidyTask('identify_task{{ task_i.id }}', 'identify-task-text-{{ task_i.id }}')" value='{{ task_i.task_4|slice:"0:1" }}'>			
 					</label>
 				</div>
 				<div class="identify-answer">

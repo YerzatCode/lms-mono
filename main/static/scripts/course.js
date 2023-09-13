@@ -1,8 +1,10 @@
 var selected_task;
+var selected = false;
 var selected_answer;
+var last_selected_task_id;
 var colors = ['yellow', 'red', 'blue', 'green', 'gray', 'greenyellow', 'cyan']
 var color_id = 0
-
+var last_page_id = 0;
 function openTask(evt, cityName) {
 	var i, tabcontent, tablinks;
 	tabcontent = document.getElementsByClassName("tabcontent");
@@ -82,41 +84,66 @@ function checkIdentidyTask(name, border_color) {
 	
 	for (i = 0; i < task_name.length; i++) {
 		if (task_name[i].checked){
-			selected_task = task_name[i].value;
-			console.log(selected_task)
-			task_name[i].disabled = true;
-			task_name[i].checked = false;
-			border_color[i].style = ('border: 1px solid ' + colors[color_id])
+			if (!selected_task) {
+				last_selected_task_id = i;
+				selected_task = task_name[i].value; 
+				task_name[i].disabled = true;
+				task_name[i].checked = false;
+
+				border_color[i].style = ('border: 2px solid ' + colors[color_id]);
+				// border_color[i].style += ('box-shadow: 0 0 5px ' + colors[color_id]);
+
+			} 
+			else { 
+				task_name[last_selected_task_id].disabled = false;
+				task_name[last_selected_task_id].checked = true;
+				border_color[last_selected_task_id].style = ('border: 2px solid gray');
+				
+				last_selected_task_id = i;
+				selected_task = task_name[i].value;
+				// console.log(selected_task)
+				task_name[i].disabled = true;
+				task_name[i].checked = false;
+
+				border_color[i].style = ('border: 2px solid ' + colors[color_id]);
+				
+			}
+
 		}
+	selected = true;
+		
 	}  
 
 }
 function checkIdentidyAnswer(name, border_color) {
-	var task_name = document.getElementsByClassName(name); 
-	var border_color = document.getElementsByClassName(border_color)
+	if (selected) {
+		var task_name = document.getElementsByClassName(name); 
+		var border_color = document.getElementsByClassName(border_color)
+		for (i = 0; i < task_name.length; i++) {
+			if (task_name[i].checked){
+				selected_answer = task_name[i].value;
+				// console.log(selected_answer)
+				task_name[i].disabled = true;
+				task_name[i].checked = false;
+				border_color[i].style = ('border: 2px solid ' + colors[color_id])
+				color_id ++
+				if (color_id == 4) {
+					color_id = 0;
+				}
 
-	for (i = 0; i < task_name.length; i++) {
-		if (task_name[i].checked){
-			selected_answer = task_name[i].value;
-			// console.log(selected_answer)
-			task_name[i].disabled = true;
-			task_name[i].checked = false;
-			border_color[i].style = ('border: 1px solid ' + colors[color_id])
-			color_id ++
-			if (color_id == 4) {
-				color_id = 0;
-			}
-
-		} 
-	} 
-	console.log(selected_answer)
-	console.log(selected_task)
-	if (selected_answer == selected_task) {
-		console.log(true)  
-		identify_question.push(0) 
+			} 
+		}  
+		if (selected_answer == selected_task) {
+			console.log(true)  
+			identify_question.push(0) 
+			selected_task = null;
+		} else {
+			console.log(false)  
+			identify_question.push(1) 
+		}
+		selected = false;
 	} else {
-		console.log(false)  
-		identify_question.push(1) 
+		alert('Сол жақтағы блокты бірінші таңдаңыз')
 	}
 }
 
@@ -145,4 +172,8 @@ function  checkIdentidyButton(identify_question, result_block, task_id, button, 
 	var identify_question;
 	identify_question = []
 	console.log(identify_question)
-} 
+}  
+
+function nextPage() {
+	// var button_id = 
+}	

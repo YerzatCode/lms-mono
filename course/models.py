@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from members.models import Customer
+from ckeditor.fields import RichTextField
 
 
 class TaskIsIdentify(models.Model):
@@ -30,12 +31,12 @@ class TaskIsFill(models.Model):
 	body 	= models.TextField('Тапсырма мәтіні')
 	answer 	= models.CharField('Тапсырма жауабы', max_length = 100)
 
-	TASK_TYPE_SELF = 'Кодты аяқта'
-	TASK_TYPE_FILL = 'Бос орынды толтыр'
+	TASK_TYPE_FILL = 'Кодты аяқта'
+	TASK_TYPE_SELF = 'Бос орынды толтыр'
 
 	TASK_TYPE_OPTIONS = (
-		(TASK_TYPE_SELF, 'Кодты аяқта'),
-		(TASK_TYPE_FILL, 'Бос орынды толтыр')
+		(TASK_TYPE_SELF, TASK_TYPE_SELF),
+		(TASK_TYPE_FILL, TASK_TYPE_FILL)
 	)
 
 	t_type	= models.CharField(max_length=100,
@@ -48,7 +49,7 @@ class TaskIsFill(models.Model):
 
 	class Meta:
 		verbose_name = 'Тапсырма '
-		verbose_name_plural = 'Тапсырмалар (Код және бос орын)'
+		verbose_name_plural = 'Тапсырмалар (Бос орынды толтыр)'
 
 
 class TaskIsTest(models.Model):
@@ -104,7 +105,6 @@ class Course(models.Model):
 		verbose_name = 'Сабақ'
 		verbose_name_plural = 'Сабақтар'
 
-
 class Subject(models.Model):
 	title	 = models.CharField('Пән атауы', max_length = 25)
 	teachers = models.ManyToManyField(Customer, verbose_name='Пән мұғалімдері', blank=True, related_name = 'teacher_sbj')
@@ -116,6 +116,19 @@ class Subject(models.Model):
 	class Meta:
 		verbose_name = 'Пән'
 		verbose_name_plural = 'Пәндер'
+
+class SubjectLection(models.Model):
+	lesson 				= models.OneToOneField(Course, verbose_name = 'Сабақ', on_delete = models.CASCADE, null = True)
+	title				= models.CharField('Лекция тақырыбы', max_length = 125)
+	body 	 			= RichTextField(verbose_name = 'Лекция мәтіні')
+	youtube_iframe_tag 	= models.CharField('Видео ролик (Iframe)', max_length = 1000)
+
+	def __str__(self):
+		return self.title
+
+	class Meta:
+		verbose_name = 'Лекция'
+		verbose_name_plural = 'Лекциялар'
 
 
 class UserResult(models.Model):

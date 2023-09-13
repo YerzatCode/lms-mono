@@ -4,7 +4,6 @@
 	 
 	<div class="container">
 		<div class="customer-create-form">
-			
 			<form action="{% url 'customer' %}" method="POST">
 				<h2>Туылған күніңіз</h2>
 				{% csrf_token %}
@@ -26,10 +25,8 @@
 				</select>
 				<br>
 				<button type="submit" class="submit">Сақтау</button>
-
 			</form>
 		</div>
-
 	</div>
 
 {% endblock %} 

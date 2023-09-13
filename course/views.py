@@ -2,7 +2,7 @@ from importlib import import_module
 from django.shortcuts import render, redirect
 from pprint import pformat 
 from .forms import TaskFillAddForm, CourseAddForm, AddCoruseForm, UserResultForm
-from .models import Course, Subject, UserResult
+from .models import Course, Subject, UserResult, SubjectLection
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from random import randint
 from datetime import datetime
@@ -25,15 +25,16 @@ def course_details_view(request, pk):
 		else:
 			result = 'Қате'
 	request.course = Course.objects.get(id = pk)
-	print(request.course.id)
+	# print(request.course.id)
 	user_result =  UserResult.objects.filter(course = request.course, user = request.user.id)
-	print(user_result)
+	# print(user_result)
 	data = {
 		'range': [str(i) for i in range(1, 12)],
 		'object_course':	request.course,
 		'compiler_result':	result,
 		'task_key':			task_key,
 		'user_result':		user_result,
+		'subject_lection': 	SubjectLection.objects.get(lesson = request.course)
 	}
 	return render(request, 'course/course_details.html', data)
 
@@ -177,6 +178,7 @@ def save_user_result(request):
 	# 	context = super(UserList, self).get_context_data(**kwargs)
 	# 	context['range'] = range(1, 11)
 	# 	return context
+
 
 class SubjectListView(ListView):
 	model = Subject
