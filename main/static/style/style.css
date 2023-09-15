@@ -86,16 +86,25 @@ main {
 .nav-details-content {
 	margin-bottom: 12px;
 }
+.nav{
+	position: sticky;
+	
+}
+.Erlan{
+	display: flex	;
+}
 nav {
 	padding-top: 20px;
-	position: absolute;
+	position: sticky;
 	left: 0;
-/*	top: 0;*/
-	width: 250px;
+	top: 0;
+	width: 100%;
+	
+	
 	background: #fff;
-	height: 100vh;
+	height: 110vh;
 	box-shadow: 0 3px 5px #000;
-/*	transition: 0.2s;*/
+	transition: 0.2s ease;
 	z-index: 100;
 }
 #open_menu {
@@ -108,6 +117,8 @@ nav {
 	padding: 2px 6px;
 	border: 2px solid gray;
 	border-radius: 10px;
+	transition: 0.2s ease;
+
 }
 nav li {
 	font-size: 18px;
@@ -145,9 +156,16 @@ nav li i {
 .container {
 /*	margin-left: 250px;*/
 	max-width: 100%;
-	margin-top: 3em;
-	position: relative;
+	/* margin-top: 3em; */
+	/* position: relative; */
+	padding: 0;
+	margin: 0;
 }
+.cok{
+	margin: 0;
+	padding: 0;
+}
+
 .members-container {
 	
 	display: flex;
@@ -546,7 +564,7 @@ nav li i {
 	color: ;
 }
 .main-block-page {
-	width: 700px;
+	width: 800px;
 	margin: auto;
 	background: #fff;
 	padding: 10px;
@@ -662,11 +680,18 @@ nav li i {
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	/* flex-direction: column; */
 	width: 100%;
+	
+}
+.ro{
+	display: flex;
+	gap: 30px;
+	flex-direction: row;
 }
 .our-team {
 	padding: 30px 0 40px;
-	margin-bottom: 30px;
+	/* margin-bottom: 30px; */
 	background-color: #f7f5ec;
 	text-align: center;
 	overflow: hidden;
@@ -956,7 +981,7 @@ nav li i {
 }
 .main-timeline .circle .img{
     vertical-align: baseline;
-    top: 0;
+	
     border-radius: 50%; 
 }
 .main-timeline .content{
@@ -1176,7 +1201,7 @@ nav li i {
         text-align: center;
     }
 }
-@media screen and (max-width: 1150px) {
+@media (max-width: 1150px) {
 	.tab {
 		width: 200px;
 	}
@@ -1208,7 +1233,10 @@ nav li i {
 		margin-left: 10px;
 	}
 }
-@media screen and (max-width: 800px) {
+@media (max-width: 800px) {
+	nav{
+		
+	}
 	.tabcontent iframe {
 		min-width: 200px;
 		width: 100%;
@@ -1228,5 +1256,42 @@ nav li i {
 		height: 100%;
 		min-height: 100%;
 		width: 100%;
+	}
+}
+@media (max-width:426px) {
+	.main-timeline .circle .img{
+			position: relative;
+	right: 25px;
+    bottom: 35px;
+	}
+	.main-block-page{
+		width: 330px;
+		margin-left: 0px;
+	}
+	
+	.block-content{
+		width: 330px;
+		margin-top: 40px;
+		margin-left: 20px;
+	}
+	.doc-container{
+		width: 300px;
+		margin-left: 20px;
+		margin-top: 40px;
+	}
+	.our-team{
+		width: 300px;
+		
+	}
+	.container-team{
+		height: 250vh;
+	}
+	section{
+		margin-left: 40px;
+		position: sticky;
+	}
+	.ro{
+		flex-direction: column;
+		padding: 0;
 	}
 }
