@@ -8,7 +8,8 @@ function menu_position(menu_status) {
 		$('nav').css('width', '60px')
 		$('nav').css('padding-top', '60px')
 		$('nav li').css('padding', '15px')
-		// $(".container").css("margin-left", '80px');
+
+		// $('.container').css('width', '80px')
 		$('#open_menu').css('left', '45px')
 	} else if (menu_status == 'opened') {
 		$('#open_menu_text').css('display', 'inline-block')
@@ -20,7 +21,8 @@ function menu_position(menu_status) {
 		$('nav li').css('padding-top', '10px')
 		$('nav li').css('padding-left', '60px')
 		$('#open_menu').css('left', '235px')
-		// $(".container").css("margin-left", '250px');
+
+		// $('.container').css('width', '250px')
 	}
 }
 
@@ -63,16 +65,17 @@ $('textarea').on('input invalid', function () {
 
 menu_position(localStorage.getItem('menu_status'))
 
-// window.addEventListener('scroll', function () {
-// 	const scrollPosition = window.scrollY
-// 	if (scrollPosition >= 88) {
-// 		$('nav').css('position', 'sticky')
-// 		$('nav').css('top', '0')
-// 	} else {
-// 		$('nav').css('position', 'sticky')
-// 		$('nav').css('top', '88px')
-// 	}
-// })
+window.addEventListener('scroll', function () {
+	const scrollPosition = window.scrollY
+	if (scrollPosition >= 88) {
+		$('nav').css('position', 'fixed')
+
+		$('nav').css('top', '0')
+	} else {
+		$('nav').css('position', 'absolute')
+		$('nav').css('top', '88px')
+	}
+})
 
 const signUpButton = document.getElementById('signUp')
 const signInButton = document.getElementById('signIn')
